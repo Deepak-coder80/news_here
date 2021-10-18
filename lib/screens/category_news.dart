@@ -58,8 +58,10 @@ class _CategoryNewsState extends State<CategoryNews> {
         backgroundColor: Colors.purple,
       ),
       body: loading
-          ? Container(
-              child: CircularProgressIndicator(),
+          ? Center(
+              child: Container(
+                child: CircularProgressIndicator(),
+              ),
             )
           : SingleChildScrollView(
               child: Container(
