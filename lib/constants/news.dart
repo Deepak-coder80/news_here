@@ -16,13 +16,14 @@ class News {
       jsonData["articles"].forEach((element) {
         if (element["urlToImage"] != null && element["description"] != null) {
           ArticleModel articleModel = ArticleModel(
-              title: element["title"],
-              author: element["author"],
-              content: element["content"],
-              description: element["description"],
-              url: element["url"],
-              urlToImage: element["urlToImage"],
-              publishedAt: element["publishedAt"]);
+            title: element["title"],
+            author: element["author"],
+            content: element["content"],
+            description: element["description"],
+            url: element["url"],
+            urlToImage: element["urlToImage"],
+          );
+          news.add(articleModel);
         }
       });
     }

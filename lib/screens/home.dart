@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/constants/data.dart';
+import 'package:news_app/constants/news.dart';
+import 'package:news_app/models/article_model.dart';
 import 'package:news_app/models/category_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,10 +14,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<CategoryModel> categories = <CategoryModel>[];
+  List<ArticleModel> articles = <ArticleModel>[];
+  bool loading = true;
   @override
   void initState() {
     super.initState();
     categories = getCategories();
+    getNews();
+  }
+
+  getNews() async {
+    News newsClass = News();
+    await newsClass.getNews();
+    articles = newsClass.news;
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
@@ -37,25 +52,47 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Container(
-          child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            height: 70,
-            child: ListView.builder(
-              itemCount: categories.length,
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return CategoryTile(
-                    imageUrl: categories[index].imageUrl,
-                    categoryName: categories[index].CategoryName);
-              },
+      body: loading
+          ? Center(
+              child: Container(
+                child: const CircularProgressIndicator(),
+              ),
+            )
+          : SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      height: 70,
+                      child: ListView.builder(
+                        itemCount: categories.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return CategoryTile(
+                              imageUrl: categories[index].imageUrl,
+                              categoryName: categories[index].CategoryName);
+                        },
+                      ),
+                    ),
+                    //blogs
+                    Container(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: articles.length,
+                        itemBuilder: (context, index) {
+                          return BlogTile(
+                              imageUrl: articles[index].urlToImage,
+                              title: articles[index].title,
+                              des: articles[index].description);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ],
-      )),
     );
   }
 }
@@ -76,8 +113,8 @@ class CategoryTile extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(6),
-              child: Image.network(
-                imageUrl,
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
                 width: 120,
                 height: 60,
                 fit: BoxFit.cover,
