@@ -60,7 +60,9 @@ class _CategoryNewsState extends State<CategoryNews> {
       body: loading
           ? Center(
               child: Container(
-                child: CircularProgressIndicator(),
+                child: const CircularProgressIndicator(
+                  color: Colors.purple,
+                ),
               ),
             )
           : SingleChildScrollView(

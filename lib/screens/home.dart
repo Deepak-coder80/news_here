@@ -58,7 +58,9 @@ class _HomePageState extends State<HomePage> {
       body: loading
           ? Center(
               child: Container(
-                child: const CircularProgressIndicator(),
+                child: const CircularProgressIndicator(
+                  color: Colors.purple,
+                ),
               ),
             )
           : SingleChildScrollView(
