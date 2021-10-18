@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/constants/data.dart';
 import 'package:news_app/constants/news.dart';
@@ -78,8 +79,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                     //blogs
                     Container(
+                      padding: const EdgeInsets.only(top: 18),
+                      margin: const EdgeInsets.all(8),
                       child: ListView.builder(
+                        scrollDirection: Axis.vertical,
                         shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
                         itemCount: articles.length,
                         itemBuilder: (context, index) {
                           return BlogTile(
@@ -155,12 +160,33 @@ class BlogTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        margin: const EdgeInsets.only(top: 18),
         child: Column(
-      children: [
-        Image.network(imageUrl),
-        Text(title),
-        Text(des),
-      ],
-    ));
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: Image.network(imageUrl),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Text(
+              des,
+              style: const TextStyle(
+                color: Colors.grey,
+              ),
+            ),
+          ],
+        ));
   }
 }
