@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/constants/data.dart';
+import 'package:news_app/models/category_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -8,6 +10,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<CategoryModel> categories = <CategoryModel>[];
+  @override
+  void initState() {
+    super.initState();
+    categories = getCategories();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +37,25 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Container(),
+      body: Container(
+          child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            height: 70,
+            child: ListView.builder(
+              itemCount: categories.length,
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return CategoryTile(
+                    imageUrl: categories[index].imageUrl,
+                    categoryName: categories[index].CategoryName);
+              },
+            ),
+          ),
+        ],
+      )),
     );
   }
 }
@@ -42,13 +69,34 @@ class CategoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(right: 16),
       child: Stack(
         children: [
-          Image.network(
-            imageUrl,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: Image.network(
+              imageUrl,
+              width: 120,
+              height: 60,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Container(
+            alignment: Alignment.center,
             width: 120,
             height: 60,
-          ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              color: Colors.black26,
+            ),
+            child: Text(
+              categoryName,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500),
+            ),
+          )
         ],
       ),
     );
