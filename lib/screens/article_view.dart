@@ -22,12 +22,12 @@ class _ArticleViewState extends State<ArticleView> {
           children: const [
             Text(
               "News",
-              style: TextStyle(
-                  color: Colors.deepPurple, fontWeight: FontWeight.bold),
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             Text(" Here",
-                style: TextStyle(
-                    color: Colors.purple, fontWeight: FontWeight.bold))
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold))
           ],
         ),
         actions: [
@@ -39,7 +39,7 @@ class _ArticleViewState extends State<ArticleView> {
               ))
         ],
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.purple,
       ),
       body: Container(
         child: WebView(
