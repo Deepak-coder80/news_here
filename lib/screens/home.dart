@@ -17,16 +17,39 @@ class _HomePageState extends State<HomePage> {
           children: const [
             Text(
               "News",
-              style:
-                  TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Colors.deepPurple, fontWeight: FontWeight.bold),
             ),
             Text(" Here",
-                style:
-                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold))
+                style: TextStyle(
+                    color: Colors.purple, fontWeight: FontWeight.bold))
           ],
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,
+      ),
+      body: Container(),
+    );
+  }
+}
+
+class CategoryTile extends StatelessWidget {
+  final String imageUrl, categoryName;
+  const CategoryTile(
+      {Key? key, required this.imageUrl, required this.categoryName})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Stack(
+        children: [
+          Image.network(
+            imageUrl,
+            width: 120,
+            height: 60,
+          ),
+        ],
       ),
     );
   }
