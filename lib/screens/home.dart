@@ -5,6 +5,7 @@ import 'package:news_app/constants/data.dart';
 import 'package:news_app/constants/news.dart';
 import 'package:news_app/models/article_model.dart';
 import 'package:news_app/models/category_model.dart';
+import 'package:news_app/screens/article_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -88,9 +89,11 @@ class _HomePageState extends State<HomePage> {
                         itemCount: articles.length,
                         itemBuilder: (context, index) {
                           return BlogTile(
-                              imageUrl: articles[index].urlToImage,
-                              title: articles[index].title,
-                              des: articles[index].description);
+                            imageUrl: articles[index].urlToImage,
+                            title: articles[index].title,
+                            des: articles[index].description,
+                            url: articles[index].url,
+                          );
                         },
                       ),
                     ),
@@ -149,44 +152,53 @@ class CategoryTile extends StatelessWidget {
 }
 
 class BlogTile extends StatelessWidget {
-  final String imageUrl, title, des;
-  const BlogTile({
-    Key? key,
-    required this.imageUrl,
-    required this.title,
-    required this.des,
-  }) : super(key: key);
+  final String imageUrl, title, des, url;
+  const BlogTile(
+      {Key? key,
+      required this.imageUrl,
+      required this.title,
+      required this.des,
+      required this.url})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.only(top: 18),
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: Image.network(imageUrl),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ArticleView(url: imageUrl)));
+      },
+      child: Container(
+          margin: const EdgeInsets.only(top: 18),
+          child: Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: Image.network(imageUrl),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Text(
-              des,
-              style: const TextStyle(
-                color: Colors.grey,
+              const SizedBox(
+                height: 8,
               ),
-            ),
-          ],
-        ));
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                des,
+                style: const TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          )),
+    );
   }
 }
