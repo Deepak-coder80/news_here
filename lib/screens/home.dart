@@ -105,3 +105,25 @@ class CategoryTile extends StatelessWidget {
     );
   }
 }
+
+class BlogTile extends StatelessWidget {
+  final String imageUrl, title, des;
+  const BlogTile({
+    Key? key,
+    required this.imageUrl,
+    required this.title,
+    required this.des,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: Column(
+      children: [
+        Image.network(imageUrl),
+        Text(title),
+        Text(des),
+      ],
+    ));
+  }
+}
